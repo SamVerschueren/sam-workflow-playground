@@ -14,4 +14,4 @@ jobs:
         run: cat $GITHUB_EVENT_PATH
       - name: Show info
         run: |
-          echo ${{github.event}}
+          echo ${{github.event}} | jq.

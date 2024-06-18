@@ -8,11 +8,13 @@ on:
 jobs:
   publish_packages:
     name: Publish Packages
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Show info
-        run: cat $GITHUB_EVENT_PATH
+        run: |
+          echo ${{github.event.workflow_run.conclusion}}
+          echo ${{github.event.workflow_run.event}}
+          echo ${{github.event.workflow_run.workflow}}
       # - name: Setup
       #   uses: pnpm/action-setup@v4
       #   with:

@@ -10,6 +10,5 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Echo
-        run: |
-          echo HELLO
+      - name: Show info
+        run: cat $GITHUB_EVENT_PATH

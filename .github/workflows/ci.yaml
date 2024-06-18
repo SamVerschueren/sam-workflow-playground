@@ -12,3 +12,8 @@ jobs:
     steps:
       - name: Show info
         run: cat $GITHUB_EVENT_PATH
+      - name: Show info
+        run: |
+          echo ${{github.event.workflow_run.conclusion}}
+          echo ${{github.event.workflow_run.event}}
+          echo ${{github.event.workflow_run.workflow}}

@@ -1,0 +1,30 @@
+name: Publish
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish'
+        required: true
+        type: string
+      tag:
+        description: 'Tag to publish'
+        required: false
+        type: string
+        default: 'latest'
+
+jobs:
+  publish_packages:
+    name: Publish packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Print versions
+        run: |
+          pnpm --version
+          npm --version
+          yarn --version

@@ -1,6 +1,6 @@
 {
   "name": "@samverschueren/bar",
-  "version": "1.0.0",
+  "version": "1.0.1-alpha.3",
   "main": "index.js",
   "type": "module",
   "scripts": {

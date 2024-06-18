@@ -13,5 +13,6 @@ jobs:
       - name: Show info
         run: cat $GITHUB_EVENT_PATH
       - name: Show info
-        run: |
-          echo ${{github.event}} | jq .
+        env:
+          EVENT_PAYLOAD: ${{ toJson(github.event) }}
+        run: echo "${EVENT_PAYLOAD}" | jq .

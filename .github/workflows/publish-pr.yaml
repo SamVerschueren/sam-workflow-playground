@@ -1,0 +1,35 @@
+name: Create Publish Pull Request
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish'
+        required: true
+        type: string
+      tag:
+        description: 'Tag to publish'
+        required: false
+        type: string
+        default: 'latest'
+
+jobs:
+  create_pr:
+    name: Create Publish PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Bump version
+        run: pnpm --recursive --filter "@samverschueren/*" exec npm version --allow-same-version ${{ inputs.version }} 
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: release v${{ inputs.version }}"
+          title: "chore: relase v${{ inputs.version }}"
+          body: "Bump packages to version `${{ inputs.version }}` with tag `${{ inputs.tag }}`"
+          reviewers: SamVerschueren
+          branch: chore/bump-version

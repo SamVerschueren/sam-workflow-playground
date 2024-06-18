@@ -1,35 +1,29 @@
-name: Publish
+name: Publish Packages
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to publish'
-        required: true
-        type: string
-      tag:
-        description: 'Tag to publish'
-        required: false
-        type: string
-        default: 'latest'
+  workflow_run:
+    workflows: [CI]
+    types:
+      - completed
 
 jobs:
   publish_packages:
-    name: Publish packages
+    name: Publish Packages
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Setup
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Bump version
-        run: pnpm --recursive --filter "@samverschueren/*" exec npm version --allow-same-version ${{ inputs.version }} 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          commit-message: "chore: bump version ${{ inputs.version }}"
-          title: "chore: bump version ${{ inputs.version }}"
-          body: "Bump packages to version ${{ inputs.version }}"
-          reviewers: SamVerschueren
-          branch: chore/bump-version
+      - name: Show info
+        run: cat $GITHUB_EVENT_PATH
+      # - name: Setup
+      #   uses: pnpm/action-setup@v4
+      #   with:
+      #     version: 8
+      # - name: Checkout
+      #   uses: actions/checkout@v4
+      # - name: Install dependencies
+      #   run: pnpm install
+      # - name: Build
+      #   run: pnpm build
+      # - name: Release packages
+      #   run: pnpm publish --recursive --tag ${{ inputs.tag }} --filter "@tutorialkit/*" --filter tutorialkit --filter create-tutorial
+      # - name: Run integration tests
+      #   run: pnpm --filter tutorialkit-integration run test

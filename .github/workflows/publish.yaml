@@ -27,8 +27,9 @@ jobs:
         run: pnpm --recursive --filter "@samverschueren/*" exec npm version --allow-same-version ${{ inputs.version }} 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
-        commit-message: "chore: bump version ${{ inputs.version }}"
-        title: "chore: bump version ${{ inputs.version }}"
-        body: "Bump packages to version ${{ inputs.version }}"
-        reviewers: SamVerschueren
-        branch: chore/bump-version
+        with:
+          commit-message: "chore: bump version ${{ inputs.version }}"
+          title: "chore: bump version ${{ inputs.version }}"
+          body: "Bump packages to version ${{ inputs.version }}"
+          reviewers: SamVerschueren
+          branch: chore/bump-version

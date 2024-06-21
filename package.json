@@ -1,4 +1,5 @@
 {
   "name": "sam-workflow-playground",
-  "private": true
+  "private": true,
+  "description": "make change somewhere else"
 }
